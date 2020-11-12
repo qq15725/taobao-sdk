@@ -3,10 +3,11 @@
   "type": "library",
   "description": "taobao SDK for php",
   "keywords": [
+    "taobao",
     "sdk",
+    "taobaoke",
     "kernel",
-    "php",
-    "laravel"
+    "php"
   ],
   "homepage": "https://github.com/qq15725/taobao",
   "license": "MIT",
