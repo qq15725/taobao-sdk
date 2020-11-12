@@ -1,0 +1,30 @@
+{
+  "name": "wxm/taobao-sdk",
+  "type": "library",
+  "description": "taobao SDK for php",
+  "keywords": [
+    "sdk",
+    "kernel",
+    "php",
+    "laravel"
+  ],
+  "homepage": "https://github.com/qq15725/taobao",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "wxm",
+      "email": "157215725@qq.com",
+      "role": "Developer"
+    }
+  ],
+  "require": {
+    "php": ">=7.1.3",
+    "wxm/sdk-kernel": "^1.0.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Taobao\\": "src/"
+    }
+  },
+  "minimum-stability": "dev"
+}
