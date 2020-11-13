@@ -26,6 +26,7 @@ class ServiceProvider implements ServiceProviderInterface
     public function register(Container $app)
     {
         $app['tbk'] = function ($app) {
+            /** @var \Taobao\Application $app */
             $app->registerProviders($this->providers);
 
             return new Tbk($app);
