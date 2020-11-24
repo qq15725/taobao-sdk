@@ -18,6 +18,7 @@ class ServiceProvider implements ServiceProviderInterface
         Sc\ServiceProvider::class,
         Tpwd\ServiceProvider::class,
         Shop\ServiceProvider::class,
+        Activity\ServiceProvider::class,
     ];
 
     /**

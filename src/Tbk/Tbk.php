@@ -13,6 +13,7 @@ use SDK\Kernel\Exceptions\InvalidArgumentException;
  * @property \Taobao\Tbk\Privilege\PrivilegeClient $privilege
  * @property \Taobao\Tbk\Dg\Dg $dg
  * @property \Taobao\Tbk\Sc\Sc $sc
+ * @property \Taobao\Tbk\Activity\ActivityClient $activity
  */
 class Tbk extends BaseClient
 {
