@@ -1,12 +1,14 @@
 {
   "name": "wxm/taobao-sdk",
   "type": "library",
-  "description": "taobao SDK for php",
+  "description": "淘宝 SDK 封装, 调用简单、语义化增强。支持 Laravel/Lumen。",
   "keywords": [
     "taobao",
     "sdk",
     "taobaoke",
     "kernel",
+    "laravel",
+    "lumen",
     "php"
   ],
   "homepage": "https://github.com/qq15725/taobao",

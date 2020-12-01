@@ -13,9 +13,7 @@
   </a>
 </p>
 
-淘宝 SDK 封装, 调用简单、语义化增强。
-
-支持 Laravel/Lumen 
+淘宝 SDK 封装, 调用简单、语义化增强。支持 Laravel/Lumen。 
 
 ## 安装
 
