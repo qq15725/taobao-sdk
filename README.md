@@ -1,3 +1,22 @@
+淘宝 SDK 封装, 调用简单、语义化增强, 文档
+
+支持 Laravel/Lumen 
+
+<p>
+  <a href="https://github.com/qq15725/taobao-sdk" target="_blank">
+    <img alt="Php-Version" src="https://img.shields.io/packagist/php-v/wxm/taobao-sdk.svg" />
+  </a>
+  <a href="https://github.com/qq15725/taobao-sdk" target="_blank">
+    <img alt="Documentation" src="https://img.shields.io/badge/documentation-yes-brightgreen.svg" />
+  </a>
+  <a href="https://github.com/qq15725/taobao-sdk/graphs/commit-activity" target="_blank">
+    <img alt="Maintenance" src="https://img.shields.io/badge/Maintained%3F-yes-green.svg" />
+  </a>
+  <a href="https://github.com/qq15725/taobao-sdk/blob/master/LICENSE" target="_blank">
+    <img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-yellow.svg" />
+  </a>
+</p>
+
 ## 安装
 
 ```bash
