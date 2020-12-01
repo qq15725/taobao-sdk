@@ -11,6 +11,7 @@ use SDK\Kernel\ServiceContainer;
  * @property \Taobao\Itemcats\Client $itemcats
  * @property \Taobao\Top\Top $top
  * @property \Taobao\Time\TimeClient $time
+ * @property \Taobao\OAuth\OAuth $oauth
  */
 class Application extends ServiceContainer
 {
@@ -23,6 +24,7 @@ class Application extends ServiceContainer
         Itemcats\ServiceProvider::class,
         Top\ServiceProvider::class,
         Time\ServiceProvider::class,
+        OAuth\ServiceProvider::class,
     ];
 
     /**
