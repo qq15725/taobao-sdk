@@ -1,4 +1,10 @@
-## use
+## 安装
+
+```bash
+composer require wxm/taobao-sdk
+```
+
+## 使用
 
 ```php
 <?php
@@ -14,7 +20,13 @@ $taobao->tbk->item->info->get(521383533703);
 $taobao->withSession('session')->tbk->sc->material->optional('洗衣粉', 'site_id', 'adzone_id');
 ```
 
-## tbk
+## 工具API
+
+- taobao.time.get (获取淘宝系统当前时间)
+- taobao.top.auth.token.create (获取Access Token)
+- taobao.top.auth.token.refresh (刷新Access Token)
+
+## 淘宝客
 
 公用
 

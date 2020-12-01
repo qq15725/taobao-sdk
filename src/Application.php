@@ -9,6 +9,8 @@ use SDK\Kernel\ServiceContainer;
  *
  * @property \Taobao\Tbk\Tbk $tbk
  * @property \Taobao\Itemcats\Client $itemcats
+ * @property \Taobao\Top\Top $top
+ * @property \Taobao\Time\TimeClient $time
  */
 class Application extends ServiceContainer
 {
@@ -19,6 +21,8 @@ class Application extends ServiceContainer
         Auth\ServiceProvider::class,
         Tbk\ServiceProvider::class,
         Itemcats\ServiceProvider::class,
+        Top\ServiceProvider::class,
+        Time\ServiceProvider::class,
     ];
 
     /**
