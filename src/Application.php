@@ -7,6 +7,7 @@ use SDK\Kernel\ServiceContainer;
 /**
  * Class Application.
  *
+ * @property \Taobao\Ip\IpClient $ip
  * @property \Taobao\Tbk\Tbk $tbk
  * @property \Taobao\Itemcats\Client $itemcats
  * @property \Taobao\Top\Top $top
@@ -20,6 +21,7 @@ class Application extends ServiceContainer
      */
     protected $providers = [
         Auth\ServiceProvider::class,
+        Ip\ServiceProvider::class,
         Tbk\ServiceProvider::class,
         Itemcats\ServiceProvider::class,
         Top\ServiceProvider::class,
