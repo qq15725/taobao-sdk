@@ -35,7 +35,7 @@ class Converter
                 'commission_rate' => (float)\bcdiv($data->get('commission_rate'), 100, 2),
                 'commission_amount' => (float)\bcmul(
                     (float)$data->get('zk_final_price'),
-                    \bcdiv($data->get('commission_rate'), 10000, 2),
+                    \bcdiv($data->get('commission_rate'), 10000, 4),
                     2
                 ),
             ],
