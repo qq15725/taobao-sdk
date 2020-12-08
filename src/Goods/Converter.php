@@ -30,11 +30,15 @@ class Converter
                 'url' => $data->get('item_url'),
             ],
             'coupon_product' => [
-                'price' => (float)$data->get('zk_final_price'),
-                'original_price' => (float)$data->get('reserve_price'),
+                'price' => $price = (float)\bcsub(
+                    (float)$data->get('zk_final_price'),
+                    (float)$data->get('coupon_amount'),
+                    2
+                ),
+                'original_price' => (float)$data->get('zk_final_price'),
                 'commission_rate' => (float)\bcdiv($data->get('commission_rate'), 100, 2),
                 'commission_amount' => (float)\bcmul(
-                    (float)$data->get('zk_final_price'),
+                    $price,
                     \bcdiv($data->get('commission_rate'), 10000, 4),
                     2
                 ),
