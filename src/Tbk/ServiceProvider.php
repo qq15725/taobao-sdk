@@ -15,6 +15,7 @@ class ServiceProvider implements ServiceProviderInterface
         Item\ServiceProvider::class,
         Privilege\ServiceProvider::class,
         Dg\ServiceProvider::class,
+        Order\ServiceProvider::class,
         Sc\ServiceProvider::class,
         Tpwd\ServiceProvider::class,
         Shop\ServiceProvider::class,

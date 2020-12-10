@@ -67,6 +67,7 @@ $taobao->withSession('session')->tbk->sc->material->optional('洗衣粉', 'site_
 - taobao.tbk.dg.optimus.material (淘宝客-推广者-物料精选)
 - taobao.tbk.dg.vegas.tlj.create (淘宝客-推广者-淘礼金创建)
 - taobao.tbk.dg.vegas.tlj.instance.report (淘宝客-推广者-淘礼金发放及使用报表)
+- taobao.tbk.order.details.get (淘宝客-推广者-所有订单查询)
 
 服务商
 
@@ -141,7 +142,7 @@ $taobao->withSession('session')->tbk->sc->material->optional('洗衣粉', 'site_
 - taobao.tbk.dg.punish.order.get 淘宝客-推广者-处罚订单查询
 - ~~taobao.tbk.tpwd.parse 淘宝客-公用-淘口令解析出原链接~~
 - ~~taobao.tbk.dg.vegas.tlj.instance.report 淘宝客-推广者-淘礼金发放及使用报表~~
-- taobao.tbk.order.details.get 淘宝客-推广者-所有订单查询
+- ~~taobao.tbk.order.details.get 淘宝客-推广者-所有订单查询~~
 - ~~taobao.tbk.sc.order.details.get 淘宝客-服务商-所有订单查询~~
 - ~~taobao.tbk.sc.tpwd.convert 淘宝客-服务商-淘口令解析&转链~~
 - taobao.tbk.sc.relation.refund 淘宝客-服务商-维权退款订单查询

@@ -12,6 +12,7 @@ use SDK\Kernel\Exceptions\InvalidArgumentException;
  * @property \Taobao\Tbk\Tpwd\TpwdClient $tpwd
  * @property \Taobao\Tbk\Privilege\PrivilegeClient $privilege
  * @property \Taobao\Tbk\Dg\Dg $dg
+ * @property \Taobao\Tbk\Order\Order $order
  * @property \Taobao\Tbk\Sc\Sc $sc
  * @property \Taobao\Tbk\Activity\ActivityClient $activity
  */
