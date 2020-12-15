@@ -10,13 +10,28 @@ class Converter
     {
         $data = new Collection($raw);
 
-        $couponUrl = $data->get('coupon_share_url') ?: null;
+        if ($data->has('coupon_click_url')) {
+            // from taobao.tbk.privilege.get
+            $couponUrl = $data->get('coupon_click_url') ?: null;
+            $commissionRate = $data->get('max_commission_rate') * 100;
+            $couponInfo = $data->get('coupon_info');
+            $couponAmount = 0;
+            if (preg_match("#减(\d+)(\.\d{1,2})*元#", $couponInfo, $match)) {
+                $couponAmount = intval($match[1]);
+            }
+        } else {
+            // from taobao.tbk.dg.material.optional
+            $couponUrl = $data->get('coupon_share_url') ?: null;
+            $commissionRate = $data->get('commission_rate');
+            $couponAmount = $data->get('coupon_amount');
+            $couponInfo = $data->get('coupon_info');
+        }
+
         $couponId = $data->get('coupon_id') ?: null;
         $shopId = $data->get('seller_id');
         $productId = $data->get('num_iid');
 
         return [
-            'channel' => 'taobao',
             'product' => [
                 'id' => $productId,
                 'shop_id' => $shopId,
@@ -33,14 +48,14 @@ class Converter
             'coupon_product' => [
                 'price' => $price = (float)\bcsub(
                     (float)$data->get('zk_final_price'),
-                    (float)$data->get('coupon_amount'),
+                    (float)$couponAmount,
                     2
                 ),
                 'original_price' => (float)$data->get('zk_final_price'),
-                'commission_rate' => (float)\bcdiv($data->get('commission_rate'), 100, 2),
+                'commission_rate' => (float)\bcdiv($commissionRate, 100, 2),
                 'commission_amount' => (float)\bcmul(
                     $price,
-                    \bcdiv($data->get('commission_rate'), 10000, 4),
+                    \bcdiv($commissionRate, 10000, 4),
                     2
                 ),
             ],
@@ -48,8 +63,8 @@ class Converter
                 'id' => $couponId,
                 'shop_id' => $shopId,
                 'product_id' => $productId,
-                'amount' => (float)$data->get('coupon_amount'),
-                'rule_text' => $data->get('coupon_info'),
+                'amount' => (float)$couponAmount,
+                'rule_text' => $couponInfo,
                 'stock' => (int)$data->has('coupon_remain_count'),
                 'total' => (int)$data->get('coupon_total_count'),
                 'started_at' => $data->get('coupon_start_time'),
