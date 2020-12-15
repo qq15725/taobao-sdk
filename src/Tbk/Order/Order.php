@@ -22,6 +22,6 @@ class Order extends BaseClient
             return $this->app["tbk.order.{$property}"];
         }
 
-        throw new InvalidArgumentException(sprintf('No Taobao.Tbk.Order service named "%s".', $property));
+        throw new InvalidArgumentException(sprintf('No taobao.tbk.order service named "%s".', $property));
     }
 }

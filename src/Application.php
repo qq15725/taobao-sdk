@@ -39,7 +39,6 @@ class Application extends ServiceContainer
         'partner_id' => 'top-sdk-php-20180326',
         'http' => [
             'timeout' => 10.0,
-            'base_uri' => 'https://eco.taobao.com/router/rest',
             'user-agent' => 'top-sdk-php',
         ],
     ];
@@ -47,7 +46,6 @@ class Application extends ServiceContainer
     public function __construct(
         string $appkey = null,
         string $appsecret = null,
-        bool $sandbox = false,
         array $config = [],
         array $prepends = []
     )
@@ -56,7 +54,6 @@ class Application extends ServiceContainer
             array_merge([
                 'appkey' => $appkey,
                 'appsecret' => $appsecret,
-                'sandbox' => $sandbox,
             ], $config),
             $prepends
         );
@@ -66,9 +63,23 @@ class Application extends ServiceContainer
     {
         $config = parent::getConfig();
 
-        // 沙箱
-        if ($config['sandbox'] ?? false) {
-            $config['http']['base_uri'] = 'https://gw.api.tbsandbox.com/router/rest';
+        if (!isset($config['http']['base_uri'])) {
+            $sandbox = $config['sandbox'] ?? false;
+            $useHttp = $config['use_http'] ?? false;
+
+            if ($useHttp) {
+                if ($sandbox) {
+                    $config['http']['base_uri'] = 'http://gw.api.tbsandbox.com/router/rest';
+                } else {
+                    $config['http']['base_uri'] = 'http://gw.api.taobao.com/router/rest';
+                }
+            } else {
+                if ($sandbox) {
+                    $config['http']['base_uri'] = 'https://gw.api.tbsandbox.com/router/rest';
+                } else {
+                    $config['http']['base_uri'] = 'https://eco.taobao.com/router/rest';
+                }
+            }
         }
 
         return $config;

@@ -10,10 +10,6 @@ use Pimple\ServiceProviderInterface;
  */
 class ServiceProvider implements ServiceProviderInterface
 {
-    protected $providers = [
-        Auth\ServiceProvider::class,
-    ];
-
     /**
      * {@inheritdoc}.
      */
@@ -21,7 +17,9 @@ class ServiceProvider implements ServiceProviderInterface
     {
         $app['top'] = function ($app) {
             /** @var \Taobao\Application $app */
-            $app->registerProviders($this->providers);
+            $app->registerProviders([
+                Auth\ServiceProvider::class,
+            ]);
 
             return new Top($app);
         };

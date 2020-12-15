@@ -22,6 +22,6 @@ class Vegas extends BaseClient
             return $this->app["tbk.dg.vegas.{$property}"];
         }
 
-        throw new InvalidArgumentException(sprintf('No Taobao.Tbk.Vegas service named "%s".', $property));
+        throw new InvalidArgumentException(sprintf('No taobao.tbk.dg.vegas service named "%s".', $property));
     }
 }

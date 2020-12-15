@@ -22,6 +22,6 @@ class Auth extends BaseClient
             return $this->app["top.auth.{$property}"];
         }
 
-        throw new InvalidArgumentException(sprintf('No Taobao.Top.Auth service named "%s".', $property));
+        throw new InvalidArgumentException(sprintf('No taobao.top.auth service named "%s".', $property));
     }
 }

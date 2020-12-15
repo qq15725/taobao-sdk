@@ -22,6 +22,6 @@ class Top extends BaseClient
             return $this->app["top.{$property}"];
         }
 
-        throw new InvalidArgumentException(sprintf('No Taobao.Top service named "%s".', $property));
+        throw new InvalidArgumentException(sprintf('No taobao.top service named "%s".', $property));
     }
 }

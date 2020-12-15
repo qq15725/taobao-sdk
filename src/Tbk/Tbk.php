@@ -30,6 +30,6 @@ class Tbk extends BaseClient
             return $this->app["tbk.{$property}"];
         }
 
-        throw new InvalidArgumentException(sprintf('No Taobao.Tbk service named "%s".', $property));
+        throw new InvalidArgumentException(sprintf('No taobao.tbk service named "%s".', $property));
     }
 }

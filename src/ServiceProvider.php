@@ -17,7 +17,6 @@ class ServiceProvider extends BaseServiceProvider
             return new Application(
                 null,
                 null,
-                false,
                 $app->make('config')->get('taobao', [])
             );
         });

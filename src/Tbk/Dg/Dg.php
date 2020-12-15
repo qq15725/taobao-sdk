@@ -24,6 +24,6 @@ class Dg extends BaseClient
             return $this->app["tbk.dg.{$property}"];
         }
 
-        throw new InvalidArgumentException(sprintf('No Taobao.Tbk.Dg service named "%s".', $property));
+        throw new InvalidArgumentException(sprintf('No taobao.tbk.dg service named "%s".', $property));
     }
 }

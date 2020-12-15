@@ -65,10 +65,10 @@ class Tlj extends BaseClient
      */
     public function __get($property)
     {
-        if (isset($this->app["dg.vegas.tlj.{$property}"])) {
-            return $this->app["dg.vegas.tlj.{$property}"];
+        if (isset($this->app["tbk.dg.vegas.tlj.{$property}"])) {
+            return $this->app["tbk.dg.vegas.tlj.{$property}"];
         }
 
-        throw new InvalidArgumentException(sprintf('No Tbk service named "%s".', $property));
+        throw new InvalidArgumentException(sprintf('No taobao.tbk.dg.vegas.tlj service named "%s".', $property));
     }
 }

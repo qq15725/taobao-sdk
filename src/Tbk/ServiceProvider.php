@@ -10,18 +10,6 @@ use Pimple\ServiceProviderInterface;
  */
 class ServiceProvider implements ServiceProviderInterface
 {
-    protected $providers = [
-        Coupon\ServiceProvider::class,
-        Item\ServiceProvider::class,
-        Privilege\ServiceProvider::class,
-        Dg\ServiceProvider::class,
-        Order\ServiceProvider::class,
-        Sc\ServiceProvider::class,
-        Tpwd\ServiceProvider::class,
-        Shop\ServiceProvider::class,
-        Activity\ServiceProvider::class,
-    ];
-
     /**
      * {@inheritdoc}.
      */
@@ -29,7 +17,17 @@ class ServiceProvider implements ServiceProviderInterface
     {
         $app['tbk'] = function ($app) {
             /** @var \Taobao\Application $app */
-            $app->registerProviders($this->providers);
+            $app->registerProviders([
+                Coupon\ServiceProvider::class,
+                Item\ServiceProvider::class,
+                Privilege\ServiceProvider::class,
+                Dg\ServiceProvider::class,
+                Order\ServiceProvider::class,
+                Sc\ServiceProvider::class,
+                Tpwd\ServiceProvider::class,
+                Shop\ServiceProvider::class,
+                Activity\ServiceProvider::class,
+            ]);
 
             return new Tbk($app);
         };

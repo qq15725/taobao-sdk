@@ -29,6 +29,6 @@ class Sc extends BaseClient
             return $this->app["tbk.sc.{$property}"];
         }
 
-        throw new InvalidArgumentException(sprintf('No Taobao.Tbk.Sc service named "%s".', $property));
+        throw new InvalidArgumentException(sprintf('No taobao.tbk.sc service named "%s".', $property));
     }
 }

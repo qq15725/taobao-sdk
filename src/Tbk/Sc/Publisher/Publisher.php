@@ -22,6 +22,6 @@ class Publisher extends BaseClient
             return $this->app["tbk.sc.publisher.{$property}"];
         }
 
-        throw new InvalidArgumentException(sprintf('No Taobao.Tbk.Sc service named "%s".', $property));
+        throw new InvalidArgumentException(sprintf('No taobao.tbk.sc.publisher service named "%s".', $property));
     }
 }

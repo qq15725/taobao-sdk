@@ -22,6 +22,6 @@ class Activity extends BaseClient
             return $this->app["tbk.sc.activity.{$property}"];
         }
 
-        throw new InvalidArgumentException(sprintf('No Taobao.Tbk.Sc.Activity service named "%s".', $property));
+        throw new InvalidArgumentException(sprintf('No taobao.tbk.sc.activity service named "%s".', $property));
     }
 }

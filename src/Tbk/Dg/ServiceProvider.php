@@ -10,6 +10,11 @@ class ServiceProvider implements ServiceProviderInterface
     public function register(Container $app)
     {
         $app['tbk.dg'] = function ($app) {
+            /** @var \Taobao\Application $app */
+            $app->registerProviders([
+                Vegas\ServiceProvider::class
+            ]);
+
             return new Dg($app);
         };
 
@@ -19,18 +24,6 @@ class ServiceProvider implements ServiceProviderInterface
 
         $app['tbk.dg.optimus'] = function ($app) {
             return new OptimusClient($app);
-        };
-
-        $app['tbk.dg.vegas'] = function ($app) {
-            return new Vegas\Vegas($app);
-        };
-
-        $app['tbk.dg.vegas.tlj'] = function ($app) {
-            return new Vegas\Tlj\Tlj($app);
-        };
-
-        $app['tbk.dg.vegas.tlj.instance'] = function ($app) {
-            return new Vegas\Tlj\InstanceClient($app);
         };
     }
 }
