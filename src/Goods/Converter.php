@@ -32,6 +32,7 @@ class Converter
         $productId = $data->get('num_iid');
 
         return [
+            'channel' => 'taobao',
             'product' => [
                 'id' => $productId,
                 'shop_id' => $shopId,
