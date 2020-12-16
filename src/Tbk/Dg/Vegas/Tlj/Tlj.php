@@ -38,7 +38,7 @@ class Tlj extends BaseClient
         int $totalNum = 1,
         int $userTotalWinNumLimit = 1,
         string $name = '淘礼金来啦',
-        string $sendStartTime = null,
+        ?string $sendStartTime = null,
         bool $securitySwitch = true,
         array $options = []
     )
