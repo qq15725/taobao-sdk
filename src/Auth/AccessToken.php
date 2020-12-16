@@ -20,7 +20,7 @@ class AccessToken extends BaseAccessToken
             'v' => $this->app->config->get('version'),
             'format' => $this->app->config->get('format'),
             'sign_method' => $this->app->config->get('sign_method'),
-            'timestamp' => date("Y-m-d H:i:s"),
+            'timestamp' => date('Y-m-d H:i:s'),
             'partner_id' => $this->app->config->get('partner_id'),
         ];
 
@@ -37,7 +37,7 @@ class AccessToken extends BaseAccessToken
         ksort($params);
         $stringToBeSigned = $secretKey;
         foreach ($params as $k => $v) {
-            if (!is_array($v) && "@" != substr($v, 0, 1)) {
+            if (!is_array($v) && '@' != substr($v, 0, 1)) {
                 $stringToBeSigned .= "$k$v";
             }
         }

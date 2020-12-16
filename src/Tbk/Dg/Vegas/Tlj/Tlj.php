@@ -22,10 +22,10 @@ class Tlj extends BaseClient
      * @param int $itemId 宝贝id
      * @param int $adzoneId 妈妈广告位Id
      * @param string $perFace 单个淘礼金面额，支持两位小数，单位元
-     * @param string $sendStartTime	发放开始时间
      * @param int $totalNum 淘礼金总个数
      * @param int $userTotalWinNumLimit 单用户累计中奖次数上限
      * @param string $name 淘礼金名称，最大10个字符
+     * @param string $sendStartTime 发放开始时间
      * @param bool $securitySwitch 安全开关，若不进行安全校验，可能放大您的资损风险，请谨慎选择
      * @param array $options 其他选项
      *
@@ -34,11 +34,11 @@ class Tlj extends BaseClient
     public function create(
         int $itemId,
         int $adzoneId,
-        string $perFace,
-        string $sendStartTime,
+        string $perFace = '1',
         int $totalNum = 1,
         int $userTotalWinNumLimit = 1,
         string $name = '淘礼金来啦',
+        string $sendStartTime = null,
         bool $securitySwitch = true,
         array $options = []
     )
@@ -49,9 +49,9 @@ class Tlj extends BaseClient
             'total_num' => $totalNum,
             'name' => $name,
             'user_total_win_num_limit' => $userTotalWinNumLimit,
-            'security_switch' => $securitySwitch,
+            'security_switch' => $securitySwitch ? 'true' : 'false',
             'per_face' => $perFace,
-            'send_start_time' => $sendStartTime,
+            'send_start_time' => $sendStartTime ?: date('Y-m-d H:i:s'),
         ];
 
         return $this->httpPost('taobao.tbk.dg.vegas.tlj.create', $options);
