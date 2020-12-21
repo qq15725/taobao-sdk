@@ -6,7 +6,7 @@ use Taobao\BaseClient;
 use SDK\Kernel\Exceptions\InvalidArgumentException;
 
 /**
- * @property \Taobao\Tbk\Sc\Order\DetailsClient $details
+ * @property \Taobao\Tbk\Order\DetailsClient $details
  */
 class Order extends BaseClient
 {

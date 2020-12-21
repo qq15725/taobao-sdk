@@ -15,17 +15,13 @@ class InvitecodeClient extends BaseClient
      *
      * @link https://developer.alibaba.com/docs/api.htm?apiId=38046
      *
-     * @param string $relationApp 渠道推广的物料类型
      * @param int $codeType 邀请码类型，1 - 渠道邀请，2 - 渠道裂变，3 -会员邀请
+     * @param string $relationApp 渠道推广的物料类型
      * @param int|null $relationId 渠道关系ID
      *
      * @return array
      */
-    public function get(
-        string $relationApp,
-        int $codeType,
-        ?int $relationId = null
-    )
+    public function get(int $codeType = 1, string $relationApp = 'common', ?int $relationId = null)
     {
         return $this->httpPostWithSession('taobao.tbk.sc.invitecode.get', [
             'relation_app' => $relationApp,
