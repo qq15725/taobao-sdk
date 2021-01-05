@@ -55,4 +55,26 @@ class BaseClient extends KernelBaseClient
 
         return current($res);
     }
+
+    /**
+     * @param string $session
+     */
+    public function setSession(string $session)
+    {
+        $this->app->config->set('session', $session);
+    }
+
+    /**
+     * @param string $session
+     *
+     * @return static
+     */
+    public function withSession(string $session)
+    {
+        $client = (clone $this);
+
+        $client->setSession($session);
+
+        return $client;
+    }
 }
