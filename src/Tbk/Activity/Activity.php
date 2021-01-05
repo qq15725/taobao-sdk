@@ -6,9 +6,9 @@ use Taobao\BaseClient;
 use SDK\Kernel\Exceptions\InvalidArgumentException;
 
 /**
- * @property \Taobao\Tbk\Activity\InfoClient $info
+ * @property \Taobao\Tbk\Activity\Info $info
  */
-class ActivityClient extends BaseClient
+class Activity extends BaseClient
 {
     /**
      * @param $property

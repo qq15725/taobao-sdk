@@ -4,7 +4,7 @@ namespace Taobao\Time;
 
 use Taobao\BaseClient;
 
-class TimeClient extends BaseClient
+class Time extends BaseClient
 {
     /**
      * taobao.time.get(

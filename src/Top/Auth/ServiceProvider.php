@@ -14,7 +14,7 @@ class ServiceProvider implements ServiceProviderInterface
         };
 
         $app['top.auth.token'] = function ($app) {
-            return new TokenClient($app);
+            return new Token($app);
         };
     }
 }

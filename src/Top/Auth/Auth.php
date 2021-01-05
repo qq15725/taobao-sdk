@@ -6,7 +6,7 @@ use Taobao\BaseClient;
 use SDK\Kernel\Exceptions\InvalidArgumentException;
 
 /**
- * @property \Taobao\Top\Auth\TokenClient $token
+ * @property \Taobao\Top\Auth\Token $token
  */
 class Auth extends BaseClient
 {

@@ -16,7 +16,7 @@ class ServiceProvider implements ServiceProviderInterface
     public function register(Container $app)
     {
         $app['time'] = function ($app) {
-            return new TimeClient($app);
+            return new Time($app);
         };
     }
 }

@@ -4,7 +4,7 @@ namespace Taobao\Itemcats;
 
 use Taobao\BaseClient;
 
-class Client extends BaseClient
+class Itemcats extends BaseClient
 {
     /**
      * taobao.itemcats.get (获取后台供卖家发布商品的标准商品类目)

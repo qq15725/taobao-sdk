@@ -4,7 +4,7 @@ namespace Taobao\Tbk\Activity;
 
 use Taobao\BaseClient;
 
-class InfoClient extends BaseClient
+class Info extends BaseClient
 {
     /**
      * taobao.tbk.activity.info.get (淘宝客-推广者-官方活动转链)

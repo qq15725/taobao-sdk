@@ -10,11 +10,11 @@ class ServiceProvider implements ServiceProviderInterface
     public function register(Container $app)
     {
         $app['tbk.activity'] = function ($app) {
-            return new ActivityClient($app);
+            return new Activity($app);
         };
 
         $app['tbk.activity.info'] = function ($app) {
-            return new InfoClient($app);
+            return new Info($app);
         };
     }
 }

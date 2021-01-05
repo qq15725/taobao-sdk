@@ -4,7 +4,7 @@ namespace Taobao\Top\Auth;
 
 use Taobao\BaseClient;
 
-class TokenClient extends BaseClient
+class Token extends BaseClient
 {
     /**
      * taobao.top.auth.token.create( 获取Access Token )

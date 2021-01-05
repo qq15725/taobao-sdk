@@ -4,7 +4,7 @@ namespace Taobao\Ip;
 
 use Taobao\BaseClient;
 
-class IpClient extends BaseClient
+class Ip extends BaseClient
 {
     /**
      * taobao.ip.get (外网Ip获取)

@@ -16,7 +16,7 @@ class ServiceProvider implements ServiceProviderInterface
     public function register(Container $app)
     {
         $app['ip'] = function ($app) {
-            return new IpClient($app);
+            return new Ip($app);
         };
     }
 }

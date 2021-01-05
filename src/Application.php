@@ -7,12 +7,12 @@ use SDK\Kernel\ServiceContainer;
 /**
  * Class Application.
  *
- * @property \Taobao\Ip\IpClient $ip
  * @property \Taobao\Tbk\Tbk $tbk
- * @property \Taobao\Itemcats\Client $itemcats
+ * @property \Taobao\Ip\Ip $ip
  * @property \Taobao\Top\Top $top
- * @property \Taobao\Time\TimeClient $time
+ * @property \Taobao\Time\Time $time
  * @property \Taobao\OAuth\OAuth $oauth
+ * @property \Taobao\Itemcats\Itemcats $itemcats
  */
 class Application extends ServiceContainer
 {
