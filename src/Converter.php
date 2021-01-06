@@ -111,7 +111,7 @@ class Converter
             'product_cover' => $data->get('item_img'),
             'product_url' => $data->get('item_link'),
             'product_title' => $data->get('item_title'),
-            'shop_title' => $data->get('seller_shop_title'),
+            'shop_name' => $data->get('seller_shop_title'),
             'type' => $data->get('order_type'),
             'terminal' => $data->get('terminal_type'),
             'amount' => (int)($data->get('alipay_total_price') * 100),
