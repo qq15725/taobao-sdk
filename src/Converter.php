@@ -7,78 +7,91 @@ use SDK\Kernel\Support\Collection;
 class Converter
 {
     /**
-     * 商品转换
+     * 商品数据转换成统一的数据格式
      *
      * @param array $raw
+     * @param null $apiType
+     * @param bool $retainRaw
      *
      * @return array
      */
-    public static function productConvert(array $raw): array
+    public static function product(array $raw, $apiType = null, $retainRaw = true): array
     {
+        if (!$raw) {
+            return [];
+        }
+
+        if (isset($raw[0])) {
+            foreach ($raw as &$itemRaw) {
+                $itemRaw = self::product($itemRaw, $apiType, $retainRaw);
+            }
+            return $raw;
+        }
+
         $data = new Collection($raw);
 
-        if ($data->has('coupon_click_url')) {
-            // from taobao.tbk.privilege.get
-            $couponUrl = $data->get('coupon_click_url') ?: null;
-            $commissionRate = $data->get('max_commission_rate') * 100;
-            $couponInfo = $data->get('coupon_info');
-            $couponAmount = 0;
-            if (preg_match("#减(\d+)(\.\d{1,2})*元#", $couponInfo, $match)) {
-                $couponAmount = intval($match[1]);
-            }
-        } else {
-            // from taobao.tbk.dg.material.optional
-            $couponUrl = $data->get('coupon_share_url') ?: null;
-            $commissionRate = $data->get('commission_rate');
-            $couponAmount = $data->get('coupon_amount');
-            $couponInfo = $data->get('coupon_info');
+        switch ($apiType) {
+            case 'taobao.tbk.privilege.get':
+                $couponUrl = $data->get('coupon_click_url') ?: null;
+                $commissionRate = $data->get('max_commission_rate') * 100;
+                $couponInfo = $data->get('coupon_info');
+                $couponAmount = 0;
+                if (preg_match("#减(\d+)(\.\d{1,2})*元#", $couponInfo, $match)) {
+                    $couponAmount = intval($match[1]);
+                }
+                break;
+            case 'taobao.tbk.item.info.get':
+            case 'taobao.tbk.dg.material.optional':
+                $couponUrl = $data->get('coupon_share_url') ?: null;
+                $commissionRate = $data->get('commission_rate');
+                $couponAmount = $data->get('coupon_amount');
+                $couponInfo = $data->get('coupon_info');
+                break;
         }
 
         $couponId = $data->get('coupon_id') ?: null;
         $shopId = $data->get('seller_id');
         $productId = $data->get('num_iid');
 
-        return [
-            'channel' => 'taobao',
-            'product' => [
-                'id' => $productId,
-                'shop_id' => $shopId,
-                'category_id' => $data->get('category_id'),
-                'title' => $data->get('title'),
-                'short_title' => $data->get('short_title'),
-                'desc' => $data->get('desc'),
-                'cover' => $data->get('pict_url'),
-                'banners' => $data->get('small_images.string'),
-                'sales_count' => (int)$data->get('volume'),
-                'rich_text_images' => [],
-                'url' => $data->get('item_url'),
-            ],
-            'coupon_product' => [
-                'price' => $price = (float)\bcsub(
-                    (float)$data->get('zk_final_price'),
-                    (float)$couponAmount,
-                    2
-                ),
-                'original_price' => (float)$data->get('zk_final_price'),
-                'commission_rate' => (float)\bcdiv($commissionRate, 100, 2),
-                'commission_amount' => (float)\bcmul(
-                    $price,
-                    \bcdiv($commissionRate, 10000, 4),
-                    2
-                ),
-            ],
-            'coupon' => [
-                'id' => $couponId,
-                'shop_id' => $shopId,
-                'product_id' => $productId,
-                'amount' => (float)$couponAmount,
-                'rule_text' => $couponInfo,
-                'stock' => (int)$data->has('coupon_remain_count'),
-                'total' => (int)$data->get('coupon_total_count'),
-                'started_at' => $data->get('coupon_start_time'),
-                'ended_at' => $data->get('coupon_end_time'),
-                'url' => $couponUrl,
-                'raw' => $raw,
+        $data = [
+            'id' => $productId,
+            'shop_id' => $shopId,
+            'category_id' => $data->get('category_id'),
+            'title' => $data->get('title'),
+            'short_title' => $data->get('short_title'),
+            'desc' => $data->get('desc'),
+            'cover' => $data->get('pict_url'),
+            'banners' => $data->get('small_images.string'),
+            'sales_count' => (int)$data->get('volume'),
+            'rich_text_images' => [],
+            'url' => $data->get('item_url'),
+            'coupons' => [
+                [
+                    'id' => $couponId,
+                    'shop_id' => $shopId,
+                    'product_id' => $productId,
+                    'amount' => (float)$couponAmount,
+                    'rule_text' => $couponInfo,
+                    'stock' => (int)$data->has('coupon_remain_count'),
+                    'total' => (int)$data->get('coupon_total_count'),
+                    'started_at' => $data->get('coupon_start_time'),
+                    'ended_at' => $data->get('coupon_end_time'),
+                    'url' => $couponUrl,
+                    'coupon_product' => [
+                        'price' => $price = (float)\bcsub(
+                            (float)$data->get('zk_final_price'),
+                            (float)$couponAmount,
+                            2
+                        ),
+                        'original_price' => (float)$data->get('zk_final_price'),
+                        'commission_rate' => (float)\bcdiv($commissionRate, 100, 2),
+                        'commission_amount' => (float)\bcmul(
+                            $price,
+                            \bcdiv($commissionRate, 10000, 4),
+                            2
+                        ),
+                    ],
+                ]
             ],
             'shop' => [
                 'id' => $shopId,
@@ -87,20 +100,38 @@ class Converter
                 'type' => 'tmall',
             ]
         ];
+
+        if ($retainRaw) {
+            $data['raw'] = $raw;
+        }
+
+        return $data;
     }
 
     /**
-     * 订单转换
+     * 订单数据转换成统一的数据格式
      *
      * @param array $raw
+     * @param bool $retainRaw
      *
      * @return array
      */
-    public static function orderConvert(array $raw): array
+    public static function order(array $raw, $retainRaw = true): array
     {
+        if (!$raw) {
+            return [];
+        }
+
+        if (isset($raw[0])) {
+            foreach ($raw as &$itemRaw) {
+                $itemRaw = self::order($itemRaw, $retainRaw);
+            }
+            return $raw;
+        }
+
         $data = new Collection($raw);
 
-        return [
+        $data = [
             'no' => $data->get('trade_id'),
             'parent_no' => $data->get('trade_parent_id'),
             'site_id' => $data->get('site_id'),
@@ -127,7 +158,13 @@ class Converter
             'created_at' => $data->get('tk_create_time'),
             'settlemented_at' => $data->get('tk_earning_time'),
             'refunded' => $data->get('refund_tag') == 1,
-            'raw' => $raw,
         ];
+
+
+        if ($retainRaw) {
+            $data['raw'] = $raw;
+        }
+
+        return $data;
     }
 }
