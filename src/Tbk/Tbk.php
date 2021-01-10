@@ -14,7 +14,7 @@ use SDK\Kernel\Exceptions\InvalidArgumentException;
  * @property \Taobao\Tbk\Dg\Dg $dg
  * @property \Taobao\Tbk\Order\Order $order
  * @property \Taobao\Tbk\Sc\Sc $sc
- * @property \Taobao\Tbk\Activity\ActivityClient $activity
+ * @property \Taobao\Tbk\Activity\Activity $activity
  */
 class Tbk extends BaseClient
 {
