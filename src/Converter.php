@@ -32,74 +32,163 @@ class Converter
 
         switch ($apiType) {
             case 'taobao.tbk.privilege.get':
-                $couponUrl = $data->get('coupon_click_url') ?: null;
-                $commissionRate = $data->get('max_commission_rate') * 100;
                 $couponInfo = $data->get('coupon_info');
                 $couponAmount = 0;
                 if (preg_match("#减(\d+)(\.\d{1,2})*元#", $couponInfo, $match)) {
                     $couponAmount = intval($match[1]);
                 }
+                $data = [
+                    'id' => $productId = $data->get('item_id', $data->get('num_iid')),
+                    'shop_id' => $shopId = $data->get('seller_id'),
+                    'category_id' => $data->get('category_id'),
+                    'title' => $data->get('title'),
+                    'short_title' => $data->get('short_title'),
+                    'desc' => $data->get('desc'),
+                    'cover' => $data->get('pict_url'),
+                    'banners' => $data->get('small_images.string'),
+                    'sales_count' => (int)$data->get('volume'),
+                    'rich_text_images' => [],
+                    'url' => $data->get('item_url'),
+                    'coupons' => [
+                        [
+                            'id' => $data->get('coupon_id'),
+                            'shop_id' => $shopId,
+                            'product_id' => $productId,
+                            'amount' => (float)$couponAmount,
+                            'rule_text' => $couponInfo,
+                            'stock' => (int)$data->has('coupon_remain_count'),
+                            'total' => (int)$data->get('coupon_total_count'),
+                            'started_at' => $data->get('coupon_start_time'),
+                            'ended_at' => $data->get('coupon_end_time'),
+                            'url' => $data->get('coupon_click_url'),
+                            'coupon_product' => [
+                                'price' => $price = (float)\bcsub(
+                                    (float)$data->get('zk_final_price'),
+                                    (float)$couponAmount,
+                                    2
+                                ),
+                                'original_price' => (float)$data->get('zk_final_price'),
+                                'commission_rate' => (float)\bcdiv($commissionRate = $data->get('max_commission_rate') * 100, 100, 2),
+                                'commission_amount' => (float)\bcmul(
+                                    $price,
+                                    \bcdiv($commissionRate, 10000, 4),
+                                    2
+                                ),
+                            ],
+                        ]
+                    ],
+                    'shop' => [
+                        'id' => $shopId,
+                        'logo' => null,
+                        'name' => $data->get('shop_title'),
+                        'type' => 'tmall',
+                    ]
+                ];
+                break;
+            case 'taobao.tbk.dg.optimus.material': // 淘宝客-推广者-物料精选
+                $data = [
+                    'id' => $productId = $data->get('item_id'),
+                    'shop_id' => $shopId = $data->get('seller_id'),
+                    'category_id' => $data->get('category_id'),
+                    'title' => $data->get('title'),
+                    'short_title' => $data->get('short_title'),
+                    'desc' => $data->get('item_description'),
+                    'cover' => $data->get('pict_url'),
+                    'banners' => $data->get('small_images.string'),
+                    'sales_count' => (int)$data->get('volume'),
+                    'rich_text_images' => [],
+                    'url' => $data->get('item_url'),
+                    'coupons' => [
+                        [
+                            'id' => $data->get('coupon_id'),
+                            'shop_id' => $shopId,
+                            'product_id' => $productId,
+                            'amount' => (float)($couponAmount = $data->get('coupon_amount')),
+                            'rule_text' => $data->get('coupon_info'),
+                            'stock' => (int)$data->has('coupon_remain_count'),
+                            'total' => (int)$data->get('coupon_total_count'),
+                            'started_at' => $data->get('coupon_start_time')
+                                ? date('Y-m-d H:i:s', $data->get('coupon_start_time') / 1000)
+                                : null,
+                            'ended_at' => $data->get('coupon_end_time')
+                                ? date('Y-m-d H:i:s', $data->get('coupon_end_time') / 1000)
+                                : null,
+                            'url' => $data->get('coupon_share_url'),
+                            'coupon_product' => [
+                                'price' => $price = (float)\bcsub(
+                                    (float)$data->get('zk_final_price'),
+                                    (float)$couponAmount,
+                                    2
+                                ),
+                                'original_price' => (float)$data->get('zk_final_price'),
+                                'commission_rate' => (float)\bcdiv($commissionRate = $data->get('commission_rate') * 100, 100, 2),
+                                'commission_amount' => (float)\bcmul(
+                                    $price,
+                                    \bcdiv($commissionRate, 10000, 4),
+                                    2
+                                ),
+                            ],
+                        ]
+                    ],
+                    'shop' => [
+                        'id' => $shopId,
+                        'logo' => null,
+                        'name' => $data->get('shop_title'),
+                        'type' => 'tmall',
+                    ]
+                ];
                 break;
             case 'taobao.tbk.item.info.get':
-            case 'taobao.tbk.dg.material.optional':
-                $couponUrl = $data->get('coupon_share_url') ?: null;
-                $commissionRate = $data->get('commission_rate');
-                $couponAmount = $data->get('coupon_amount');
-                $couponInfo = $data->get('coupon_info');
+            case 'taobao.tbk.dg.material.optional': // 淘宝客-推广者-物料搜索
+                $data = [
+                    'id' => $productId = $data->get('num_iid'),
+                    'shop_id' => $shopId = $data->get('seller_id'),
+                    'category_id' => $data->get('category_id'),
+                    'title' => $data->get('title'),
+                    'short_title' => $data->get('short_title'),
+                    'desc' => $data->get('desc'),
+                    'cover' => $data->get('pict_url'),
+                    'banners' => $data->get('small_images.string'),
+                    'sales_count' => (int)$data->get('volume'),
+                    'rich_text_images' => [],
+                    'url' => $data->get('item_url'),
+                    'coupons' => [
+                        [
+                            'id' => $data->get('coupon_id'),
+                            'shop_id' => $shopId,
+                            'product_id' => $productId,
+                            'amount' => (float)($couponAmount = $data->get('coupon_amount')),
+                            'rule_text' => $data->get('coupon_info'),
+                            'stock' => (int)$data->has('coupon_remain_count'),
+                            'total' => (int)$data->get('coupon_total_count'),
+                            'started_at' => $data->get('coupon_start_time'),
+                            'ended_at' => $data->get('coupon_end_time'),
+                            'url' => $data->get('coupon_share_url'),
+                            'coupon_product' => [
+                                'price' => $price = (float)\bcsub(
+                                    (float)$data->get('zk_final_price'),
+                                    (float)$couponAmount,
+                                    2
+                                ),
+                                'original_price' => (float)$data->get('zk_final_price'),
+                                'commission_rate' => (float)\bcdiv($commissionRate = $data->get('commission_rate'), 100, 2),
+                                'commission_amount' => (float)\bcmul(
+                                    $price,
+                                    \bcdiv($commissionRate, 10000, 4),
+                                    2
+                                ),
+                            ],
+                        ]
+                    ],
+                    'shop' => [
+                        'id' => $shopId,
+                        'logo' => null,
+                        'name' => $data->get('shop_title'),
+                        'type' => 'tmall',
+                    ]
+                ];
                 break;
         }
-
-        $couponId = $data->get('coupon_id') ?: null;
-        $shopId = $data->get('seller_id');
-        $productId = $data->get('num_iid');
-
-        $data = [
-            'id' => $productId,
-            'shop_id' => $shopId,
-            'category_id' => $data->get('category_id'),
-            'title' => $data->get('title'),
-            'short_title' => $data->get('short_title'),
-            'desc' => $data->get('desc'),
-            'cover' => $data->get('pict_url'),
-            'banners' => $data->get('small_images.string'),
-            'sales_count' => (int)$data->get('volume'),
-            'rich_text_images' => [],
-            'url' => $data->get('item_url'),
-            'coupons' => [
-                [
-                    'id' => $couponId,
-                    'shop_id' => $shopId,
-                    'product_id' => $productId,
-                    'amount' => (float)$couponAmount,
-                    'rule_text' => $couponInfo,
-                    'stock' => (int)$data->has('coupon_remain_count'),
-                    'total' => (int)$data->get('coupon_total_count'),
-                    'started_at' => $data->get('coupon_start_time'),
-                    'ended_at' => $data->get('coupon_end_time'),
-                    'url' => $couponUrl,
-                    'coupon_product' => [
-                        'price' => $price = (float)\bcsub(
-                            (float)$data->get('zk_final_price'),
-                            (float)$couponAmount,
-                            2
-                        ),
-                        'original_price' => (float)$data->get('zk_final_price'),
-                        'commission_rate' => (float)\bcdiv($commissionRate, 100, 2),
-                        'commission_amount' => (float)\bcmul(
-                            $price,
-                            \bcdiv($commissionRate, 10000, 4),
-                            2
-                        ),
-                    ],
-                ]
-            ],
-            'shop' => [
-                'id' => $shopId,
-                'logo' => null,
-                'name' => $data->get('shop_title'),
-                'type' => 'tmall',
-            ]
-        ];
 
         if ($retainRaw) {
             $data['raw'] = $raw;
