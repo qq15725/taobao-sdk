@@ -240,9 +240,10 @@ class Converter
             'precommission_amount' => (int)($data->get('pub_share_pre_fee') * 100),
             'royalty_amount' => (int)($data->get('alimama_share_fee') * 100),
             'status' => $data->get('tk_status'),
-            'special_id' => $data->get('special_id'),
-            'relation_id' => $data->get('relation_id'),
-            'clicked_at' => $data->get('click_time'),
+            'extension' => [
+                'special_id' => $data->get('special_id'),
+                'relation_id' => $data->get('relation_id'),
+            ],
             'paid_at' => $data->get('tb_paid_time'),
             'created_at' => $data->get('tk_create_time'),
             'settlemented_at' => $data->get('tk_earning_time'),
