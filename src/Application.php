@@ -38,7 +38,7 @@ class Application extends ServiceContainer
         'sign_method' => 'md5',
         'partner_id' => 'top-sdk-php-20180326',
         'http' => [
-            'timeout' => 10.0,
+            'timeout' => 20.0,
             'user-agent' => 'top-sdk-php',
         ],
     ];
