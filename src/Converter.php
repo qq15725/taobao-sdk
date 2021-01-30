@@ -246,7 +246,8 @@ class Converter
             ],
             'paid_at' => $data->get('tb_paid_time'),
             'created_at' => $data->get('tk_create_time'),
-            'settlemented_at' => $data->get('tk_earning_time'),
+            'finished_at' => $data->get('tk_earning_time'),
+            'settlemented_at' => null,
             'refunded' => $data->get('refund_tag') == 1,
         ];
 
