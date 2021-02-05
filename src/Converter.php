@@ -70,8 +70,12 @@ class Converter
                                 'original_price' => (float)$data->get('zk_final_price'),
                                 'commission_rate' => (float)\bcdiv($commissionRate = $data->get('max_commission_rate') * 100, 100, 2),
                                 'commission_amount' => (float)\bcmul(
-                                    $price,
-                                    \bcdiv($commissionRate, 10000, 4),
+                                    \bcmul(
+                                        $price,
+                                        \bcdiv($commissionRate, 10000, 4),
+                                        2
+                                    ),
+                                    0.9,
                                     2
                                 ),
                             ],
@@ -123,8 +127,12 @@ class Converter
                                 'original_price' => (float)$data->get('zk_final_price'),
                                 'commission_rate' => (float)\bcdiv($commissionRate = $data->get('commission_rate') * 100, 100, 2),
                                 'commission_amount' => (float)\bcmul(
-                                    $price,
-                                    \bcdiv($commissionRate, 10000, 4),
+                                    \bcmul(
+                                        $price,
+                                        \bcdiv($commissionRate, 10000, 4),
+                                        2
+                                    ),
+                                    0.9,
                                     2
                                 ),
                             ],
@@ -173,8 +181,12 @@ class Converter
                                 'original_price' => (float)$data->get('zk_final_price'),
                                 'commission_rate' => (float)\bcdiv($commissionRate = $data->get('commission_rate'), 100, 2),
                                 'commission_amount' => (float)\bcmul(
-                                    $price,
-                                    \bcdiv($commissionRate, 10000, 4),
+                                    \bcmul(
+                                        $price,
+                                        \bcdiv($commissionRate, 10000, 4),
+                                        2
+                                    ),
+                                    0.9,
                                     2
                                 ),
                             ],
@@ -220,6 +232,13 @@ class Converter
 
         $data = new Collection($raw);
 
+        $royaltyAmount = (int)bcmul($data->get('alimama_share_fee'), 100);
+        if ($commissionAmount = (int)bcmul($data->get('total_commission_fee'), 100)) {
+            $commissionAmount -= $royaltyAmount;
+        }
+        $precommissionAmount = (int)bcmul($data->get('pub_share_pre_fee'), 100);
+        $precommissionAmount -= $royaltyAmount;
+
         $data = [
             'no' => $data->get('trade_id'),
             'parent_no' => $data->get('trade_parent_id'),
@@ -236,9 +255,9 @@ class Converter
             'terminal' => $data->get('terminal_type'),
             'amount' => (int)bcmul($data->get('alipay_total_price'), 100),
             'commission_rate' => (int)bcmul($data->get('total_commission_rate'), 100),
-            'commission_amount' => (int)bcmul($data->get('total_commission_fee'), 100),
-            'precommission_amount' => (int)bcmul($data->get('pub_share_pre_fee'), 100),
-            'royalty_amount' => (int)bcmul($data->get('alimama_share_fee'), 100),
+            'commission_amount' => $commissionAmount,
+            'precommission_amount' => $precommissionAmount,
+            'royalty_amount' => $royaltyAmount,
             'status' => $data->get('tk_status'),
             'extension' => [
                 'special_id' => $data->get('special_id'),
