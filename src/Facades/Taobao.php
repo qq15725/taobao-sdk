@@ -12,6 +12,7 @@ use Taobao\Application;
  * @method static \Taobao\Time\Time time()
  * @method static \Taobao\OAuth\OAuth oauth()
  * @method static \Taobao\Itemcats\Itemcats itemcats()
+ * @method static \Taobao\Wireless\Wireless wireless()
  *
  * @mixin Application
  */

@@ -7,9 +7,7 @@ use Taobao\BaseClient;
 class Time extends BaseClient
 {
     /**
-     * taobao.time.get(
-
-     * )
+     * taobao.time.get(获取淘宝系统当前时间)
      *
      * ￥开放平台基础API不需用户授权
      *
